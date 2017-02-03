@@ -4,6 +4,7 @@ elements = function ()
     var conexion2;
     var content;
     var content2;
+    var idchoose;
 };
 
 elements.prototype.conexion = function ()
@@ -79,7 +80,7 @@ elements.prototype.revisionconexion = function ()
 
 elements.prototype.see2 = function ()
 {
-    document.getElementById("busquedarealizada").innerHTML = "";
+    document.getElementById("tablero").innerHTML = "";
     var tablero = $('<table id="busquedarealizada"></table>');
     var primerafila = $('<tr><th>Número de vuelo</th><th>Origen</th><th>Destino</th><th>Hora de salida</th><th>Hora de llegada</th><th>Aerolinea</th><th>Precio</th><th>Ver</th></tr>');
     $("#tablero").append(tablero);
@@ -87,21 +88,23 @@ elements.prototype.see2 = function ()
 
     for (contador = 0; contador < content.length; contador++)
     {
-        var fila = $('<tr><td>' + content[contador].nvuelo + '</td><td>' + content[contador].codOrigen + '</td><td>' + content[contador].codDestino + '</td><td>' + content[contador].horaSalida + '</td></td><td>' + content[contador].horaLlegada + '</td><td>' + content[contador].codAerolinea + '</td><td>' + content[contador].precio + '</td><td><input type="radio" name="vista" value="' + content[contador].nvuelo + '"></td>');
+        var fila = $('<tr><td>' + content[contador].nvuelo + '</td><td>' + content[contador].codOrigen + '</td><td>' + content[contador].codDestino + '</td><td>' + content[contador].horaSalida + '</td></td><td>' + content[contador].horaLlegada + '</td><td>' + content[contador].codAerolinea + '</td><td>' + content[contador].precio + '</td><td><input type="radio" id="'+contador+'" name="vista" value="' + content[contador].nvuelo + '"></td>');
         $("#busquedarealizada").append(fila);
     }
 
     $("input[name='vista']").click(function ()
     {
         var nvuelo = $(this).val();
-        elements.prototype.conexionvuelo(nvuelo);
+        idchoose = $(this).attr("id");
+        //elements.prototype.conexionvuelo(nvuelo);
+        elements.prototype.fechareserva();
     });
 };
 
 elements.prototype.conexionvuelo = function(nvuelo)
 {
         todojson = {
-        "nVuelo": nvuelo
+        "nvuelo": nvuelo
         };
 
         var object = JSON.stringify(todojson);
@@ -115,7 +118,38 @@ elements.prototype.conexionvuelo = function(nvuelo)
             "success": function (data, textStatus, jqXHR)
             {
                 content2 = data;
-                alert(content2);
+                elements.prototype.fechareserva();
             }
          });
+}
+
+elements.prototype.fechareserva = function()
+{
+    document.getElementById("tablero").innerHTML = "";
+    var suvuelo = $("<h2>Ha elegido el vuelo con estas características</h2>");
+    $("#tablero").append(suvuelo);
+    var tablero = $('<table id="busquedarealizada"></table>');
+    var primerafila = $('<tr><th>Origen</th><th>Destino</th><th>Hora de salida</th><th>Hora de llegada</th><th>Aerolinea</th><th>Precio</th></tr>');
+    $("#tablero").append(tablero);
+    $("#busquedarealizada").append(primerafila);
+    var fila = $('<tr><td>' + content[idchoose].codOrigen + '</td><td>' + content[idchoose].codDestino + '</td><td>' + content[idchoose].horaSalida + '</td></td><td>' + content[idchoose].horaLlegada + '</td><td>' + content[idchoose].codAerolinea + '</td><td>' + content[idchoose].precio + '</td>');
+    $("#busquedarealizada").append(fila);
+    
+    
+    var tablavuelo = $('<table id="tablavuelo"></table>');
+    var primerafilavuelo = $('<tr><th>Fecha</th><th>Plazas libres</th><th>Reservar</th></tr>');
+    $("#tablero").append(tablavuelo);
+    $("#tablavuelo").append(primerafilavuelo);
+    
+    for (contador = 0; contador < content.length; contador++)
+    {
+        var filavuelo = $('<tr><td>' + content2[contador].fecha + '</td><td>' + content2[contador].plazasLibres + '</td><td><input type="radio" id="'+contador+'" name="reserva" value="' + content[contador].codVuelo + '"></td>');
+        $("#tablavuelo").append(filavuelo);
+    }
+    
+    $("input[name='reserva']").click(function ()
+    {
+        alert("prueba");
+    });
+    
 }
