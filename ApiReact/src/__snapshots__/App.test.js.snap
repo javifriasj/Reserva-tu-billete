@@ -1,0 +1,57 @@
+exports[`Button snapshots 1`] = `
+<button
+  className=""
+  onClick={undefined}
+  type="button">
+  Give me more
+</button>
+`;
+
+exports[`Search snapshots 1`] = `
+<form
+  onSubmit={undefined}>
+  Search
+  <input
+    onChange={undefined}
+    type="text"
+    value={undefined} />
+   
+  <button
+    type="submit">
+    Search
+  </button>
+</form>
+`;
+
+exports[`table snapshots 1`] = `
+<div>
+  <div
+    className="table-row">
+    <span>
+      1
+    </span>
+    <span>
+      <button
+        className=""
+        onClick={[Function]}
+        type="button">
+        Dimiss
+      </button>
+    </span>
+  </div>
+  <div
+    className="table-row">
+    <span>
+      2
+    </span>
+    <span>
+      <button
+        className=""
+        onClick={[Function]}
+        type="button">
+        Dimiss
+      </button>
+    </span>
+  </div>
+</div>
+`;
